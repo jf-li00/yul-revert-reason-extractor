@@ -6,7 +6,7 @@ fn main() {
     let re = Regex::new(r#"revertReasonIfDebugFunction\(\"(.?*)\"\)"#).expect("unable to build new regex");
     let args : Vec<String> = env::args().collect();
     assert!(args.len()>=2);
-    let mut raintable = HashMap::new();
+    let mut rainbow_table = HashMap::new();
     let solidity_repo_path = &args[1];
     for entry in WalkDir::new(solidity_repo_path).into_iter().filter_map(|e| e.ok()){
         let path = entry.into_path();
@@ -31,10 +31,10 @@ fn main() {
             let hash_hex = out_put.iter().map(|byte| format!("{:02x}",byte)).collect::<String>();
             println!("Revert function call found in {:?}", &path);
             println!("{:?} : {:}",revert_reason,hash_hex);
-            raintable.insert(hash_hex, revert_reason.to_string());
+            rainbow_table.insert(hash_hex, revert_reason.to_string());
         }
     }
-    let json = serde_json::to_string_pretty(&raintable).expect("unable to dump raintable to json");
+    let json = serde_json::to_string_pretty(&rainbow_table).expect("unable to dump raintable to json");
     fs::write("./out.json", &json).expect("Unable to write result into file");
 
 }

@@ -28,8 +28,8 @@ fn main() {
             let mut out_put = [0u8;32];
             hasher.finalize(&mut out_put);
             let hash_hex = out_put.iter().map(|byte| format!("{:02x}",byte)).collect::<String>();
-            println!("Revert function call find in {:?}", &path);
-            println!("{:?} {:}",revert_reason,hash_hex);
+            println!("Revert function call found in {:?}", &path);
+            println!("{:?} : {:}",revert_reason,hash_hex);
 
         }
     }
